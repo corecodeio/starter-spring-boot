@@ -15,6 +15,10 @@ public class Employee {
 		this.department = department;
 	}
 	
+	public Employee() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Integer getId() {
 		return id;
 	}
