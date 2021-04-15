@@ -13,39 +13,45 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dao.EmployeeDAO;
 import com.example.demo.model.Employee;
+import com.example.demo.repository.EmployeeRepository;
+import com.example.demo.service.EmployeeService;
 
 @RestController
 public class EmployeeController {
 	
 	@Autowired
-	private EmployeeDAO dao;
+	private EmployeeService service;
 	
 	@PostMapping("/employee")
 	public void addEmployee(@RequestBody Employee e) {
-		this.dao.create(e);
+		this.service.createNewEmployee(e);
 	}
+	
 	
 	@GetMapping("/employee")
 	public List<Employee> getEmployees() {
-		return this.dao.list();
+		return this.service.listEmployees();
 	}
 	
 	@GetMapping("/employee/{id}")
-	public Optional<Employee> getEmployee(@PathVariable int id) {
-		return this.dao.get(id);
+	public Optional<Employee> getEmployee(@PathVariable Long id) {
+		return  this.service.getEmployee(id);
 	}
 	
 	@PutMapping("/employee/{id}")
-	public void updateEmployee(@RequestBody Employee e, @PathVariable int id) {
-		this.dao.update(e, id);
+	public void updateEmployee(@RequestBody Employee e, @PathVariable Long id) {
+		this.service.updateEmployee(e, id);
 	}
 	
 	@DeleteMapping("/employee/{id}")
-	public void deleteEmployee(@PathVariable int id) {
-		this.dao.delete(id);
-		
+	public void deleteEmployee(@PathVariable Long id) {
+		this.service.deleteEmployee(id);
+	}
+	
+	@GetMapping("/employee/department/{name}")
+	public Optional<Employee> getEmployeeByDepartment(@PathVariable String name) {
+		return this.service.findByDeptName(name);
 	}
 	
 	

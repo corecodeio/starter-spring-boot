@@ -1,28 +1,32 @@
 package com.example.demo.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Employee {
 	
-	private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	@Column
 	private String first_name;
+	@Column
 	private String last_name;
-	private String department;
 	
-	public Employee(Integer id, String first_name, String last_name, String department) {
-		super();
-		this.id = id;
-		this.first_name = first_name;
-		this.last_name = last_name;
-		this.department = department;
-	}
+	@ManyToOne(targetEntity=Department.class, cascade=CascadeType.ALL)
+	private Department department;
 	
-	public Employee() {
-		// TODO Auto-generated constructor stub
-	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getFirst_name() {
@@ -37,13 +41,14 @@ public class Employee {
 	public void setLast_name(String last_name) {
 		this.last_name = last_name;
 	}
-	public String getDepartment() {
+
+	public Department getDepartment() {
 		return department;
 	}
-	public void setDepartment(String department) {
+	public void setDepartment(Department department) {
 		this.department = department;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", first_name=" + first_name + ", last_name=" + last_name + ", department="
